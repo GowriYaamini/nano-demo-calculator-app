@@ -1,4 +1,4 @@
-from flask import Flask,request
+from flask import Flask,request,jsonify
 
 app = Flask(__name__)
 
@@ -11,17 +11,17 @@ def greeting():
 def add():
     data=request.get_json()
     if "first" in data and "second" in data:
-        return data["first"]+data["second"]
+        return jsonify({"result":data["first"]+data["second"]})
     else:
-        return 200
+        return jsonify({"error":"values missing"})
 
 @app.route("/calculator/subtract", methods=['POST'])
 def subtract():
     data=request.get_json()
     if "first" in data and "second" in data:
-        return data["first"]-data["second"]
+        return jsonify({"result":data["first"]-data["second"]})
     else:
-        return 200
+        return jsonify({"error":"values missing"})
 
 if __name__ == '__main__':
     app.run(port=8080,host='0.0.0.0')
