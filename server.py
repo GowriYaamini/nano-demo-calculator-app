@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask,request
 
 app = Flask(__name__)
 
@@ -9,11 +9,19 @@ def greeting():
 
 @app.route("/calculator/add", methods=['POST'])
 def add():
-    return first+second
+    data=request.get_json()
+    if "first" in data and "second" in data:
+        return data["first"]+data["second"]
+    else:
+        return 200
 
 @app.route("/calculator/subtract", methods=['POST'])
 def subtract():
-    return first-second
+    data=request.get_json()
+    if "first" in data and "second" in data:
+        return data["first"]-data["second"]
+    else:
+        return 200
 
 if __name__ == '__main__':
     app.run(port=8080,host='0.0.0.0')
